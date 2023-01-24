@@ -1,10 +1,11 @@
+---
 resources:
   - name: concourse-examples
     type: git
     icon: github
     source:
       uri: https://github.com/serenity-dojo/exercise-3-majucamex2005.git
-    branch: master
+      branch: master
 
 jobs:
   - name: read-the-readme
@@ -21,6 +22,12 @@ jobs:
             - name: concourse-examples
           run:
             path: cat
-            args: ["concourse-examples/README.md"]
-
-
+            args: [ "concourse-examples/README.md" ]
+  - name: MavenJob
+    serial: true
+    plan:
+      - get: project
+        trigger: true
+      - task: mvn-test
+        privileged: true
+        file: project/test.yml

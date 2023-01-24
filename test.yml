@@ -1,0 +1,17 @@
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: maven   # let's hope bin/bash is available there. if no, use sh
+    tag: latest
+
+inputs:
+  - name: project   # project is your git-repo. all paths are relative to it's location
+outputs:
+  - name: mvn-output
+
+run:
+  path: /bin/bash
+  args:
+    - project/test-script.sh:
